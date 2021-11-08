@@ -3,7 +3,6 @@ package fuse
 import (
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
 	"syscall"
@@ -83,8 +82,6 @@ func directmount(dir string, cfg *MountConfig) (*os.File, error) {
 	}
 	delete(opts, "subtype")
 	data += "," + mapToOptionsString(opts)
-	log.Printf("DEBUG(directmount): dir=%v, fstype=%v, mountflag=%v; data=%v", dir, fstype, mountflag, data)
-
 	if err := unix.Mount(
 		cfg.FSName, // source
 		dir,        // target
@@ -93,10 +90,9 @@ func directmount(dir string, cfg *MountConfig) (*os.File, error) {
 		data,       // data
 	); err != nil {
 		if err == syscall.EPERM {
-			log.Printf("DEBUG(directmount): syscall.EPERM err = %v", err)
 			return nil, errFallback
+
 		}
-		log.Printf("DEBUG(directmount): err = %v", err)
 		return nil, err
 	}
 	return dev, nil
