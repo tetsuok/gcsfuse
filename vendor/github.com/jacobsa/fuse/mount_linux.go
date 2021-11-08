@@ -82,9 +82,7 @@ func directmount(dir string, cfg *MountConfig) (*os.File, error) {
 		fstype += "." + subtype
 	}
 	delete(opts, "subtype")
-	if len(opts) > 0 {
-		data += "," + mapToOptionsString(opts)
-	}
+	data += "," + mapToOptionsString(opts)
 	log.Printf("DEBUG(directmount): dir=%v, fstype=%v, mountflag=%v; data=%v", dir, fstype, mountflag, data)
 
 	if err := unix.Mount(
