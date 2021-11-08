@@ -21,7 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install fuse
-      run: apk add --update --no-cache bash ca-certificates fuse gcc
+      run: apk add --update --no-cache bash ca-certificates fuse gcc libc-dev
     - name: Build
       run: |
         go build ./...
