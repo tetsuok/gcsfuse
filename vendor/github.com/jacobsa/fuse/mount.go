@@ -63,7 +63,7 @@ func Mount(
 	ready := make(chan error, 1)
 	dev, err := mount(dir, config, ready)
 	if err != nil {
-		return nil, fmt.Errorf("mount: %v; dir = %v, config.Options = %v", err, dir, config.Options)
+		return nil, fmt.Errorf("mount: %v; dir = %v, cfg.toOptionsString() = %v", err, dir, config.toOptionsString())
 	}
 
 	// Choose a parent context for ops.
