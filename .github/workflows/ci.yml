@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-20.04
     container:
       image: golang:${{ matrix.go }}-alpine
-      options: --privileged --cap-add SYS_ADMIN --device /dev/fuse
+      options: --privileged --cap-add ALL --device /dev/fuse
 
     steps:
     - uses: actions/checkout@v2
