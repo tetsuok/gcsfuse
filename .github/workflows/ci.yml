@@ -32,5 +32,4 @@ jobs:
         build_gcsfuse . /tmp ${GITHUB_SHA}
     - name: Run tests
       run: |
-        mount
         go test -p 1 -count 1 -v -cover ./...
