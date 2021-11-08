@@ -192,7 +192,19 @@ func (c *MountConfig) toMap() (opts map[string]string) {
 		opts["default_permissions"] = ""
 	}
 
+	// HACK(jacobsa): Work around what appears to be a bug in systemd v219, as
+	// shipped in Ubuntu 15.04, where it automatically unmounts any file system
+	// that doesn't set an explicit name.
+	//
+	// When Ubuntu contains systemd v220, this workaround should be removed and
+	// the systemd bug reopened if the problem persists.
+	//
+	// Cf. https://github.com/bazil/fuse/issues/89
+	// Cf. https://bugs.freedesktop.org/show_bug.cgi?id=90907
 	fsname := c.FSName
+	if runtime.GOOS == "linux" && fsname == "" {
+		fsname = "some_fuse_file_system"
+	}
 
 	// Special file system name?
 	if fsname != "" {
