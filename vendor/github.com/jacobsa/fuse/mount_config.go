@@ -206,6 +206,11 @@ func (c *MountConfig) toMap() (opts map[string]string) {
 		fsname = "some_fuse_file_system"
 	}
 
+	// For docker.
+	if runtime.GOOS == "linux" {
+		opts["--make-rshared"] = ""
+	}
+
 	// Special file system name?
 	if fsname != "" {
 		opts["fsname"] = fsname
