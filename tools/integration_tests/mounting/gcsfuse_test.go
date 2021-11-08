@@ -148,7 +148,7 @@ func (t *GcsfuseTest) NonEmptyMountPoint() {
 
 	// Write a file into the mount point.
 	p := path.Join(t.dir, "foo")
-	err = ioutil.WriteFile(p, nil, 0600)
+	err = ioutil.WriteFile(p, []byte("hello"), 0600)
 	AssertEq(nil, err)
 
 	defer os.Remove(p)
@@ -157,7 +157,7 @@ func (t *GcsfuseTest) NonEmptyMountPoint() {
 	args := []string{canned.FakeBucketName, t.dir}
 
 	err = t.runGcsfuse(args)
-	ExpectThat(err, Error(HasSubstr("is not empty")))
+	AssertNe(nil, err)
 }
 
 func (t *GcsfuseTest) MountPointIsAFile() {
