@@ -11,18 +11,20 @@ on:
 jobs:
   linux-tests:
     strategy:
+      max-parallel: 1
       fail-fast: false
       matrix:
-        go: [1.16, 1.17]
+        go: [1.16.x, 1.17.x]
     runs-on: ubuntu-20.04
-    container:
-      image: golang:${{ matrix.go }}-alpine
-      options: --privileged --cap-add SYS_ADMIN --device /dev/fuse
 
     steps:
     - uses: actions/checkout@v2
+    - name: Set up Go ${{ matrix.go }}
+      uses: actions/setup-go@v2.1.4
+      with:
+        go-version: ${{ matrix.go }}
     - name: Install fuse
-      run: apk add --update --no-cache bash ca-certificates fuse gcc libc-dev
+      run: sudo apt-get update && sudo apt-get install -y fuse3 libfuse-dev
     - name: Build
       run: |
         go build ./...
