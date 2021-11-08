@@ -150,6 +150,10 @@ func (t *GcsfuseTest) NonEmptyMountPoint() {
 	p := path.Join(t.dir, "foo")
 	err = ioutil.WriteFile(p, []byte("hello"), 0600)
 	AssertEq(nil, err)
+	f, err := os.Open(p)
+	AssertEq(nil, err)
+	err = f.Sync()
+	AssertEq(nil, err)
 
 	defer os.Remove(p)
 
