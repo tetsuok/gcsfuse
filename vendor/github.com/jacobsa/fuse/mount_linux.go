@@ -3,7 +3,6 @@ package fuse
 import (
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"os/exec"
 	"syscall"
@@ -120,7 +119,6 @@ func mount(dir string, cfg *MountConfig, ready chan<- error) (*os.File, error) {
 			"--",
 			dir,
 		}
-		log.Printf("DEBUG(mount): argv = %v\n", argv)
 		return fusermount(fusermountPath, argv, []string{}, true)
 	}
 	return dev, err
