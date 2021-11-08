@@ -3,6 +3,7 @@ package fuse
 import (
 	"errors"
 	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"syscall"
@@ -81,6 +82,7 @@ func directmount(dir string, cfg *MountConfig) (*os.File, error) {
 		fstype += "." + subtype
 	}
 	delete(opts, "subtype")
+	log.Printf("DEBUG(directmount): dir=%v, fstype=%v, mountflag=%v; data=%v", dir, fstype, mountflag, data)
 	data += "," + mapToOptionsString(opts)
 	if err := unix.Mount(
 		cfg.FSName, // source
