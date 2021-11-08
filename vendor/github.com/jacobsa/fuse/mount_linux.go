@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"runtime"
 	"syscall"
 
 	"golang.org/x/sys/unix"
@@ -114,9 +115,13 @@ func mount(dir string, cfg *MountConfig, ready chan<- error) (*os.File, error) {
 		if err != nil {
 			return nil, err
 		}
+		flag := "--"
+		if runtime.GOOS == "linux" {
+			flag = "--make-rshared"
+		}
 		argv := []string{
 			"-o", cfg.toOptionsString(),
-			"--",
+			flag,
 			dir,
 		}
 		return fusermount(fusermountPath, argv, []string{}, true)
