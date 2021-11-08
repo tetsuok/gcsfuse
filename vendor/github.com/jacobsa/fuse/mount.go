@@ -104,8 +104,6 @@ func fusermount(binary string, argv []string, additionalEnv []string, wait bool)
 		return nil, fmt.Errorf("Socketpair: %v", err)
 	}
 
-	fmt.Fprintf(os.Stderr, "DEBUG: argv: %v\n", argv)
-
 	// Wrap the sockets into os.File objects that we will pass off to fusermount.
 	writeFile := os.NewFile(uintptr(fds[0]), "fusermount-child-writes")
 	defer writeFile.Close()
