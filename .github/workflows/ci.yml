@@ -20,10 +20,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Set up Go ${{ matrix.go }}
-      uses: actions/setup-go@v2.1.4
-      with:
-        go-version: ${{ matrix.go }}
     - name: Install fuse
       run: apk add --update --no-cache bash ca-certificates fuse
     - name: Build
