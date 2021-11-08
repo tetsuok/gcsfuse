@@ -13,10 +13,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        go: [1.16.10, 1.17.3]
+        go: [1.16.x 1.17.x]
     runs-on: ubuntu-20.04
     container: 
-      image: golang:${{ matrix.go }}:-alpine
+      image: golang:${{ matrix.go }}-alpine
 
     steps:
     - uses: actions/checkout@v2
