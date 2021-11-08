@@ -15,7 +15,7 @@ jobs:
       matrix:
         go: [1.16, 1.17]
     runs-on: ubuntu-20.04
-    container: 
+    container:
       image: golang:${{ matrix.go }}-alpine
       options: --privileged --device /dev/fuse
 
@@ -23,11 +23,6 @@ jobs:
     - uses: actions/checkout@v2
     - name: Install fuse
       run: apk add --update --no-cache bash ca-certificates fuse gcc libc-dev
-    - name: Setup vfs.
-      run: |
-        sudo systemctl stop docker
-        echo '{"cgroup-parent":"/actions_job","storage-driver":"vfs"}' | sudo tee /etc/docker/daemon.json
-        sudo systemctl start docker
     - name: Build
       run: |
         go build ./...
