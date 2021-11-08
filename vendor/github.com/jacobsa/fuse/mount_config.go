@@ -202,9 +202,9 @@ func (c *MountConfig) toMap() (opts map[string]string) {
 	// Cf. https://github.com/bazil/fuse/issues/89
 	// Cf. https://bugs.freedesktop.org/show_bug.cgi?id=90907
 	fsname := c.FSName
-	if runtime.GOOS == "linux" && fsname == "" {
-		fsname = "some_fuse_file_system"
-	}
+	// if runtime.GOOS == "linux" && fsname == "" {
+	// 	fsname = "some_fuse_file_system"
+	// }
 
 	// Special file system name?
 	if fsname != "" {
